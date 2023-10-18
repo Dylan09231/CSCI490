@@ -35,13 +35,13 @@ public class objects
 		}
 
 		
-		setCurencies(List<string> updated values)
+		setCurencies(List<string>, updated values)
 		{
-             //update currencies		 
+                   //update currencies		 
 
 		}
 
-
+	}
 
 			
 }
