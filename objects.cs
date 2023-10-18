@@ -27,18 +27,20 @@ public class objects
 			this.overallValueDollar = 0.00;  
 		}
 
-		addCryptoToWallet(string crypto, double dollar, double crypto)
+		addCryptoToWallet(string crypto, double dollar)
 		{ 	
 			this.curencies.add(crypto);
-			this.dollarList.add(cost);
-			this.overallValueDollar += cost; 
+			this.dollarList.add(dollar); 
 		}
 
 		
-		setCurencies(List<string>, updated values)
+		setOverallCost()
 		{
-                   //update currencies		 
+                       //iterate through dollarList		 
 
+
+		       		//set value here
+		       		this.overallValueDollar 
 		}
 
 	}
