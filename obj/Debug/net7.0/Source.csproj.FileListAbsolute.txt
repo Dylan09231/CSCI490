@@ -1,0 +1,15 @@
+/home/dylan/Source/CSCI490/bin/Debug/net7.0/Source
+/home/dylan/Source/CSCI490/bin/Debug/net7.0/Source.deps.json
+/home/dylan/Source/CSCI490/bin/Debug/net7.0/Source.runtimeconfig.json
+/home/dylan/Source/CSCI490/bin/Debug/net7.0/Source.dll
+/home/dylan/Source/CSCI490/bin/Debug/net7.0/Source.pdb
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/Source.csproj.AssemblyReference.cache
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/Source.GeneratedMSBuildEditorConfig.editorconfig
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/Source.AssemblyInfoInputs.cache
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/Source.AssemblyInfo.cs
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/Source.csproj.CoreCompileInputs.cache
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/Source.dll
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/refint/Source.dll
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/Source.pdb
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/Source.genruntimeconfig.cache
+/home/dylan/Source/CSCI490/obj/Debug/net7.0/ref/Source.dll
