@@ -1,18 +1,17 @@
 # CSCI490
-This project simulates a trading desktop application. It will feature an asynchronous approach
-that will use the users resources to run trading algorithms. The whole project will be compiled down
-into an executable that can be run on a desktop. A database must be connected to the desktop for market data
-and user information. 
+This project simulates a trading desktop application. It will feature a singleton approach
+that will use the users resources to run trading algorithms. The whole project (not including the database)
+will be compiled down into an executable that can be run on a desktop.
 
 User Stories
 
-As a student trader with little experience, I want a easy to use, intuitive, user interface.
+As a student trader with little experience, I want an easy to use, intuitive, user interface.
 
-As a trader, I want historical market values and trend analysis to help evaluate trades.
+As a trader, coin to dollar cost equiavlents.
 
-As an experienced crypto investor, I want multi wallet support to allow for portfolio diversification.
+As a trader and tech enthuasist, I want an application that does not take up alot of space on my computer.
 
 Languages
-Front end- HTML/Javascript
+Front end- winform
 Middle   - c#
 Back     - MySQL
