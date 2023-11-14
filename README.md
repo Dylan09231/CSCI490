@@ -9,7 +9,7 @@ As a student trader with little experience, I want an easy to use, intuitive, us
 
 As a trader, coin to dollar cost equiavlents.
 
-As a trader and tech enthuasist, I want an application that does not take up alot of space on my computer.
+As a trader, I want a portfolio section with detailed information about my trades.
 
 Languages
 Front end- winform
