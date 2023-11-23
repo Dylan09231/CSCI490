@@ -24,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aletheia.Service" Version="0.4.0" />
+    <PackageReference Include="Microsoft.Data.Analysis" Version="0.20.1" />
     <PackageReference Include="MySql.Data" Version="8.0.29" />
   </ItemGroup>
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CatalystCoins")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+459dac13c1d93cbbd41a4d6fde5ed958cc1c313f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CatalystCoins")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CatalystCoins")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

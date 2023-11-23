@@ -1,4 +1,6 @@
-
+using System;
+using Aletheia.Service;
+using Aletheia.Service.StockData;
 
 namespace WinFormsTest1
 {
@@ -24,23 +26,32 @@ namespace WinFormsTest1
                 label1.Visible = false;
 
                 //3. add information to database if it does not exist (add aditional objects)
-                if(!customer.CheckExistance(customer.connectToMySQL()))
+                if (!customer.CheckExistance(customer.connectToMySQL()))
                 {
                     //add customer and wallet (testing)
-                    customer.InsertUser(customer.connectToMySQL());
-                    Wallet custWall = new Wallet(customer.getUserId());
-                    custWall.insertNewWallet(custWall.connectToMySQL());
+                    //customer.InsertUser(customer.connectToMySQL());
+                    //Wallet custWall = new Wallet(customer.getUserId());
+                    //custWall.insertNewWallet(custWall.connectToMySQL());
 
                     //more testing
-                    custWall.addMoneyToWallet(custWall.connectToMySQL(), 199.99);
-                    custWall.buyCoin(custWall.connectToMySQL(), 60.00, "bitcoin");
+                   // custWall.addMoneyToWallet(custWall.connectToMySQL(), 199.99);
+                    //custWall.buyCoin(custWall.connectToMySQL(), 60.00, "bitcoin");
 
                     //customer.deleteUser(customer.connectToMySQL());
                 }
 
                 //4. display user information if it exist on top section of screen
-                label2.Text = customer.getUserId();
+                //label2.Text = customer.getUserId();
 
+                //more testing
+                //Market mar = new Market();
+                //List<double> values= mar.getCost()
+
+                AVConnection connection = new AVConnection();
+                string test = connection.SAveCSVFromURL("IBM");
+                label3.Text = test;
+
+                
             }
 
             else
