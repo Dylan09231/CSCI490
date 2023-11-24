@@ -59,3 +59,9 @@ C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-wi
 C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\Aletheia.Service.dll
 C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
 C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\TimHanewich.Toolkit.dll
+C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\RestSharp.dll
+C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\System.Text.Encodings.Web.dll
+C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\System.Text.Json.dll
+C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\System.Net.Http.Formatting.dll
+C:\Users\tanne\Source\Repos\Dylan09231\CSCI490\WinFormsTest1\bin\Debug\net6.0-windows\Newtonsoft.Json.Bson.dll

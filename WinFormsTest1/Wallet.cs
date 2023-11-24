@@ -22,8 +22,9 @@ namespace WinFormsTest1
         private string userId;
         private double overallValueDollar;
         private double cashAvailable;
-        private List<double> currencyCost;
-        private List<string> currencies;
+        private List<double> currencyCostPerShare;
+        private List<double> shares;
+        private List<string> stock;
 
         //constructor
         public Wallet(string userId)
@@ -31,8 +32,9 @@ namespace WinFormsTest1
             this.userId = userId;
             this.overallValueDollar = 0.0;
             this.cashAvailable = 0.0;
-            this.currencyCost = new List<double>();
-            this.currencies = new List<string>();
+            this.currencyCostPerShare = new List<double>();
+            this.shares = new List<double>();
+            this.stock = new List<string>();
         }
 
         //getters and setters
@@ -49,14 +51,19 @@ namespace WinFormsTest1
             return this.overallValueDollar;
         }
 
-        public List<string> getCurrencies()
+        public List<string> getStock()
         {
-            return this.currencies;
+            return this.stock;
         }
 
-        public List<double> getCurrencyCost()
+        public List<double> getShares()
         {
-            return this.currencyCost;
+            return this.shares;
+        }
+
+        public List<double> getCurrencyCostPerShare()
+        {
+            return this.currencyCostPerShare;
         }
 
         //update in database as well, add more MySQL methods
@@ -71,14 +78,19 @@ namespace WinFormsTest1
 
         }
 
-        public void setCurrencies(List<string> cur)
+        public void setStock(List<string> cur)
         {
-            this.currencies = cur;
+            this.stock = cur;
         }
 
-        public void setCurrencyCost(List<double> curCost)
+        public void setCurrencyCostPerShare(List<double> curCost)
         {
-            this.currencyCost = curCost;
+            this.currencyCostPerShare = curCost;
+        }
+
+        public void setShares(List<double> shares)
+        {
+            this.shares = shares;
         }
 
         public void setCashAvialable(double cash)
@@ -125,19 +137,22 @@ namespace WinFormsTest1
             var value2 = command2.ExecuteReader();
 
             //6. declare/initialize new lists
-            List<double> currencyCost = new List<double>();
-            List<string> currencies = new List<string>();
+            List<double> currencyCostPerShare = new List<double>();
+            List<double> shares = new List<double>();
+            List<string> stock = new List<string>();
 
             //7. loop through each column of
             while(value2.Read()) 
             {
-                currencyCost.Add(Convert.ToDouble(value2[1]));
-                currencies.Add(Convert.ToString(value2[2]));
+                currencyCostPerShare.Add(Convert.ToDouble(value2[1]));
+                shares.Add(Convert.ToDouble(value2[2]));
+                stock.Add(Convert.ToString(value2[3]));
             }
 
             //8. attach new lists to object
-            this.currencyCost = currencyCost;
-            this.currencies = currencies;
+            this.currencyCostPerShare = currencyCostPerShare;
+            this.shares = shares;
+            this.stock = stock;
 
             //9. close connections
             value2.Close();
@@ -161,7 +176,7 @@ namespace WinFormsTest1
             command.ExecuteNonQuery();
 
             //4. insert value of currencyCost and currency 
-            var insertCurency = "INSERT INTO Curency (userId, currencyCost, currencies) VALUES(@newUserId,@newCurrencyCost, @newCurrencies)";
+            var insertCurency = "INSERT INTO Curency (userId, currencyCostPerShare, shares, stock) VALUES(@newUserId,@newCurrencyCost, @newShares @newStock)";
 
             //5. Add parameters to wallet query
             MySqlCommand command2 = new MySqlCommand(insertCurency, connection);
@@ -169,11 +184,12 @@ namespace WinFormsTest1
             //6.add the respected values in a loop
             int count = 0;
 
-            foreach (string s in this.currencies)
+            foreach (string s in this.stock)
             {
                 command2.Parameters.AddWithValue("@newUserId", this.userId);
-                command2.Parameters.AddWithValue("@newCurrencyCost", this.currencyCost[count]);
-                command2.Parameters.AddWithValue("@newCurrencies", this.currencies[count]);
+                command2.Parameters.AddWithValue("@newCurrencyCost", this.currencyCostPerShare[count]);
+                command2.Parameters.AddWithValue("@newShares", this.shares[count]);
+                command2.Parameters.AddWithValue("@newStock", this.shares[count]);
                 command2.ExecuteNonQuery();
 
                 count++;
@@ -249,8 +265,8 @@ namespace WinFormsTest1
             connection.Close();
         }
 
-        //test when coin section is added
-        public Boolean buyCoin(MySqlConnection connection, double cost, string coinName)
+        //test when coin section is added, redo this for regular market
+        public Boolean buyStock(MySqlConnection connection, double cost, string name)
         {
             //1.Make sure cash is available before continuing 
             if(this.cashAvailable < cost)

@@ -34,7 +34,7 @@ namespace WinFormsTest1
                     //custWall.insertNewWallet(custWall.connectToMySQL());
 
                     //more testing
-                   // custWall.addMoneyToWallet(custWall.connectToMySQL(), 199.99);
+                    // custWall.addMoneyToWallet(custWall.connectToMySQL(), 199.99);
                     //custWall.buyCoin(custWall.connectToMySQL(), 60.00, "bitcoin");
 
                     //customer.deleteUser(customer.connectToMySQL());
@@ -47,11 +47,11 @@ namespace WinFormsTest1
                 //Market mar = new Market();
                 //List<double> values= mar.getCost()
 
-                AVConnection connection = new AVConnection();
-                string test = connection.SAveCSVFromURL("IBM");
+                LiveConnection connection = new LiveConnection();
+                string test = connection.retrievePrice("LTC");
                 label3.Text = test;
 
-                
+
             }
 
             else
@@ -61,6 +61,11 @@ namespace WinFormsTest1
 
 
 
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
 
         }
     }

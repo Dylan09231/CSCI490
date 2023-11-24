@@ -16,8 +16,6 @@ namespace WinFormsTest1
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
 
-            Users local = new Users("Dylan", "Test");
-
             //if (local.CheckExistance(local.connectToMySQL()) == false)
             //{
             //local.InsertUser(local.connectToMySQL());
