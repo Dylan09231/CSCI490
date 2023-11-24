@@ -7,7 +7,7 @@ User Stories
 
 As a student trader with little experience, I want an easy to use, intuitive, user interface.
 
-As a trader, coin to dollar cost equiavlents.
+As a trader, I want to be able to search for a stock by name to view information about it.
 
 As a trader, I want a portfolio section with detailed information about my trades.
 
