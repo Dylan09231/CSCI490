@@ -35,11 +35,6 @@
             label2 = new Label();
             button1 = new Button();
             label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
-            label7 = new Label();
-            label8 = new Label();
             button2 = new Button();
             button3 = new Button();
             SuspendLayout();
@@ -99,51 +94,7 @@
             label3.Size = new Size(84, 37);
             label3.TabIndex = 5;
             label3.Text = "coinA";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(326, 398);
-            label4.Name = "label4";
-            label4.Size = new Size(82, 37);
-            label4.TabIndex = 6;
-            label4.Text = "coinB";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(324, 491);
-            label5.Name = "label5";
-            label5.Size = new Size(84, 37);
-            label5.TabIndex = 7;
-            label5.Text = "coinC";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(322, 579);
-            label6.Name = "label6";
-            label6.Size = new Size(86, 37);
-            label6.TabIndex = 8;
-            label6.Text = "coinD";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(327, 664);
-            label7.Name = "label7";
-            label7.Size = new Size(81, 37);
-            label7.TabIndex = 9;
-            label7.Text = "coinE";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(328, 752);
-            label8.Name = "label8";
-            label8.Size = new Size(80, 37);
-            label8.TabIndex = 10;
-            label8.Text = "coinF";
+            label3.Click += label3_Click;
             // 
             // button2
             // 
@@ -172,11 +123,6 @@
             ClientSize = new Size(945, 883);
             Controls.Add(button3);
             Controls.Add(button2);
-            Controls.Add(label8);
-            Controls.Add(label7);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(button1);
             Controls.Add(label2);
@@ -198,11 +144,6 @@
         private Label label2;
         private Button button1;
         private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private Label label8;
         private Button button2;
         private Button button3;
     }
