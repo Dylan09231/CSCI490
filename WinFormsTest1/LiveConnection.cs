@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Analysis;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
@@ -20,16 +21,24 @@ namespace WinFormsTest1
             _token = "NlV2c2cxU0NRRGF3M25qdEdrWUloemp6Y25jdkpmQ1l4Ym9jVEl3bklxST0";
         }
 
-        public string retrievePrice(string symbol)
+        public dynamic retrievePrice(string symbol)
         {
             //create restful API
-            var client = new RestClient("https://api.marketdata.app/v1/stocks/quotes/" + symbol +"/?token=" + _token);
+            var client = new RestClient("https://api.marketdata.app/v1/stocks/quotes/" + symbol + "/?token=" + _token);
             var request = new RestRequest("");
 
             var response = client.Get(request);
-            var json = JObject.Parse(response.Content);
+            
+            //Deserialize json
+            dynamic data = JsonConvert.DeserializeObject(response.Content);
+            string val = (data.last).ToString();
+            
+            //clean up string representation
+            val = (val.Replace("\r\n", string.Empty));
+            val = val.Substring(1, val.Length - 2);
 
-            return ($"{json["ask"]}");
+            return val;
+            
 
 
 

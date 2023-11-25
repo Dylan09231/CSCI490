@@ -1,6 +1,5 @@
 using System;
-using Aletheia.Service;
-using Aletheia.Service.StockData;
+
 
 namespace WinFormsTest1
 {
@@ -10,6 +9,30 @@ namespace WinFormsTest1
         public Form1()
         {
             InitializeComponent();
+
+            //connect to market data
+            LiveConnection connection = new LiveConnection();
+
+            //load data into labels
+            string price = connection.retrievePrice("LTC");
+            label3.Text = "$" + price;
+
+            price = connection.retrievePrice("KO");
+            label5.Text = "$" + price;
+
+            price = connection.retrievePrice("MSFT");
+            label8.Text = "$" + price;
+
+            price = connection.retrievePrice("INTC");
+            label10.Text = "$" + price;
+
+            price = connection.retrievePrice("AMD");
+            label12.Text = "$" + price;
+
+            price = connection.retrievePrice("GOOGL");
+            label14.Text = "$" + price;
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -46,11 +69,11 @@ namespace WinFormsTest1
                 //more testing
                 //Market mar = new Market();
                 //List<double> values= mar.getCost()
-
+                /*
                 LiveConnection connection = new LiveConnection();
                 string test = connection.retrievePrice("LTC");
-                label3.Text = test;
-
+                label3.Text = test.Substring(1, test.Length);
+                */
 
             }
 
@@ -67,6 +90,46 @@ namespace WinFormsTest1
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //connect to market data
+            LiveConnection connection = new LiveConnection();
+
+            //load data into labels
+            string price = connection.retrievePrice("LTC");
+            label3.Text = "$" +price;
+
+            price = connection.retrievePrice("KO");
+            label5.Text = "$" + price;
+
+            price = connection.retrievePrice("MSFT");
+            label8.Text = "$" + price;
+
+            price = connection.retrievePrice("INTC");
+            label10.Text = "$" + price;
+
+            price = connection.retrievePrice("AMD");
+            label12.Text = "$" + price;
+
+            price = connection.retrievePrice("GOOGL");
+            label14.Text = "$" + price;
         }
     }
 }
