@@ -21,6 +21,8 @@ namespace WinFormsTest1
             //local.InsertUser(local.connectToMySQL());
             //}
             //local.deleteUser(local.connectToMySQL());
+
+            
         }
     }
 }
