@@ -45,6 +45,32 @@ namespace WinFormsTest1
 
         //add an add cash function
         //MySQL methods (CSCI 330 citation)
+
+        public Boolean validatePassword(MySqlConnection connection,String password)
+        {
+            //1. open connection
+            connection.Open();
+
+            //2. statement to get info from the database
+            var user = "Select * from users where userId = '" + this.userId + "'";
+
+            //3. load string and execute reader
+            MySqlCommand command = new MySqlCommand(user, connection);
+            var value = command.ExecuteReader();
+
+            while (value.Read())
+            {
+                if (value[1].Equals(password))
+                {
+                    value.Close();
+                    return true;
+                }
+            }
+
+            value.Close();
+            return false;
+            
+        }
         public MySqlConnection connectToMySQL()
         {
             //1. connection string

@@ -11,6 +11,7 @@ using Microsoft.VisualBasic;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Common;
 using MySqlX.XDevAPI.Relational;
+using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Asn1.IsisMtt.X509;
 using Org.BouncyCastle.Utilities.Collections;
 
@@ -125,8 +126,13 @@ namespace WinFormsTest1
             MySqlCommand command = new MySqlCommand(wallet, connection);
             var value = command.ExecuteReader();
 
-            this.overallValueDollar = Convert.ToDouble(value[1].ToString());
-            this.cashAvailable = Convert.ToDouble(value[1].ToString());
+            while (value.Read())
+            {
+                this.overallValueDollar = Convert.ToDouble(value[1].ToString());
+                this.cashAvailable = Convert.ToDouble(value[2].ToString());
+            }
+
+            
 
             //4. close value
             value.Close();
@@ -189,7 +195,7 @@ namespace WinFormsTest1
                 command2.Parameters.AddWithValue("@newUserId", this.userId);
                 command2.Parameters.AddWithValue("@newCurrencyCost", this.currencyCostPerShare[count]);
                 command2.Parameters.AddWithValue("@newShares", this.shares[count]);
-                command2.Parameters.AddWithValue("@newStock", this.shares[count]);
+                command2.Parameters.AddWithValue("@newStock", this.stock[count]);
                 command2.ExecuteNonQuery();
 
                 count++;
@@ -242,22 +248,46 @@ namespace WinFormsTest1
             command.Parameters.AddWithValue("@newOverallValueDollar", this.overallValueDollar);
             command.Parameters.AddWithValue("@newCashAvialble", this.cashAvailable);
 
+            //4. insert statement for currency
+            var insertCur = "INSERT INTO Currency (userId, currencyCostPerShare, shares, stock) VALUES(@newUserId,@newCurrencyCostPerShare, @newShares, @newStock)";
 
-            //5. execute and close connection
+            //5. add parameters
+            MySqlCommand command2 = new MySqlCommand(insertCur, connection);
+            command2.Parameters.AddWithValue("@newUserId", this.userId);
+            command2.Parameters.AddWithValue("@newCurrencyCostPerShare", this.currencyCostPerShare);
+            command2.Parameters.AddWithValue("@newShares", this.shares);
+            command2.Parameters.AddWithValue("@newStock", this.stock);
+
+            //6. execute and close connection
             command.ExecuteNonQuery();
+            command2.ExecuteNonQuery();
             connection.Close();
         }
 
         public void addMoneyToWallet(MySqlConnection connection, double add) 
         { 
-            //1.add money to object
-            this.cashAvailable = this.cashAvailable + add;
 
             //2. update database
             connection.Open();
 
+            //retrieve cash available from database
+            var getWallet = "SELECT * from wallet WHERE userId = '" + this.userId + "'";
+            MySqlCommand comm = new MySqlCommand(getWallet, connection);
+            var val = comm.ExecuteReader();
+
+            double cashTot = 0.0;
+
+            if (val.Read())
+            {
+                cashTot = add + Convert.ToDouble(val[2]);
+            }
+
+            val.Close();
+
+            this.cashAvailable = cashTot;
+
             //3. create the update string
-            var updateWallet = "UPDATE wallet SET cashAvailable = "+ this.cashAvailable +" WHERE userId = '" +this.userId +"'";
+            var updateWallet = "UPDATE wallet SET cashAvailable = "+ cashTot +" WHERE userId = '" +this.userId +"'";
             MySqlCommand command = new MySqlCommand(updateWallet, connection);
             command.ExecuteNonQuery();
 
@@ -266,10 +296,14 @@ namespace WinFormsTest1
         }
 
         //test when coin section is added, redo this for regular market
-        public Boolean buyStock(MySqlConnection connection, double cost, string name)
+        public Boolean buyStock(MySqlConnection connection, double shares, string name)
         {
+            //0. retrieve cost from live connection
+            LiveConnection market = new LiveConnection();
+            double cost = (Convert.ToDouble(market.retrievePrice(name))) * shares;
+
             //1.Make sure cash is available before continuing 
-            if(this.cashAvailable < cost)
+            if (this.cashAvailable < cost)
             {
                 return false;
             }
@@ -277,11 +311,20 @@ namespace WinFormsTest1
             //2. open the connection
             connection.Open();
 
+            //add values locally
+            currencyCostPerShare.Add(Convert.ToDouble(market.retrievePrice(name)));
+            this.shares.Add(shares);
+            this.stock.Add(name);
+
             //3. insert statement for currencies
-            var insertCurrency = "INSERT INTO Currency (userId, currencyCost, currencies) VALUES(@newUserId,@newCurrencyCost, @newCurrencies)";
+            var insertCurrency = "INSERT INTO Currency (userId, currencyCostPerShare, shares, stock) VALUES(@newUserId,@newCurrencyCostPerShare, @newshares, @newStock)";
 
             //4. retrieve coin values from database
             MySqlCommand command = new MySqlCommand(insertCurrency, connection);
+            command.Parameters.AddWithValue("@newUserId", this.userId);
+            command.Parameters.AddWithValue("@newCurrencyCostPerShare", market.retrievePrice(name));
+            command.Parameters.AddWithValue("@newShares", shares);
+            command.Parameters.AddWithValue("@newStock", name);
 
             //5. execute
             command.ExecuteNonQuery();
@@ -312,53 +355,42 @@ namespace WinFormsTest1
             return true;
         }
 
-        //test method below
-
-        /*public Boolean sellCoin(MySqlConnection connection, string coin, double cost)
+        public void sellStock(MySqlConnection connection, string name, double shares)
         {
 
             //1. open the connection
             connection.Open();
 
             //2. select the corresponding row for currency 
-            var selectCurrency = "Select * from Currency WHERE userId = '" + this.userId + "'";
-            
-            //3. retrieve coin value
-            MySqlCommand command = new MySqlCommand(selectCurrency, connection);
-            var currencyVal = command.ExecuteNonQuery();
-            double curTotal = currencyVal[1];
+            var selectCurrency = "Select * from Currency WHERE userId = '" + this.userId + "' AND stock = '" + name + "'";
 
-            //check that cost does not excede curTotal
-            if(curTotal > cost)
+            //3. retrieve stock value
+            MySqlCommand command = new MySqlCommand(selectCurrency, connection);
+            var currencyVal = command.ExecuteReader();
+
+            double cost = 0.00;
+
+            if (currencyVal.Read() )
             {
-                connection.Close();
-                return false;
+                //retrive cost
+                cost = Convert.ToDouble(currencyVal[1]);
+
+                //2. select the corresponding row for currency deletion
+                var deleteCurrency = "Delete from Currency WHERE userId = '" + this.userId + "' AND stock = '" + name +"' AND shares = "+ shares ;
+                MySqlCommand co = new MySqlCommand(deleteCurrency, connection);
+                currencyVal.Close();
+                co.ExecuteNonQuery();
+
+                cost = cost * shares;
+                this.cashAvailable = this.cashAvailable + cost;
+                this.overallValueDollar = this.overallValueDollar - cost;
+
             }
 
-            //4.update currency value
-            var updateCurrency = "Update Currency SET currencyCost = " + (curTotal - cost) + " WHERE userId = '" + this.userId + "' and currencies = '" + coin "'");
-            MySqlCommand command2 = new MySqlCommand(updateCurrency, connection);
-            command2.ExecuteNonQuery();
+            
+            
 
-            //5. add cost to cash avialable and update wallet
-            this.cashAvailable = this.cashAvailable + cost;
-            var updateCashAvailable = "UPDATE wallet SET cashAvailable = " + this.cashAvailable + " WHERE userId = '" + this.userId + "'";
-            MySqlCommand command3 = new MySqlCommand(updateCashAvailable, connection);
-            command3.ExecuteNonQuery();
-
-            //6. subtract cash from overall value
-            this.overallValueDollar = this.overallValueDollar - cost;
-            var updateOverallVal = "UPDATE wallet SET overallValueDollar = " + this.overallValueDollar + " WHERE userId = '" + this.userId + "'";
-
-            //7. make changes in database
-            MySqlCommand command4 = new MySqlCommand(updateOverallVal, connection);
-            command4.ExecuteNonQuery();
-
-            //8.close connection and return
-            connection.Close();
-            return true;
-
-        }*/
+        }
 
         //new object to update market values or new method?
     }
